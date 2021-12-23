@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: WalmartAPI
+types:
+  ProductDetail: !include dataTypes/ProductDetailDataType.raml
+
+/product-details:
+  post:
+    body:
+      application/json:
+        type: ProductDetail
+    responses:
+      "201":
+        body:
+          application/json:
+            example:
+              message:
+                Status: Record added
+            type: object
+/products/get-details:
+  get:
+    queryParameters:
+      usItemId:
+        example: "55885487"
+        type: string
+    responses:
+      "200":
+        body:
+          application/json:
+            example: !include examples/getProductDetailExample.raml
+/stores/list:
+  get:
+    queryParameters:
+      postalCode:
+        example: "75040"
+        type: string
+    responses:
+      "200":
+        body:
+          application/json:
+            example: !include examples/getNearByStoresExample.raml

@@ -1,0 +1,11 @@
+{
+  "sampleData": {
+    "03cc9136-417f-4568-b5d7-9703fc7211f6": {
+      "vars-nearbyResponse": "sample_data/java_1.dwl"
+    },
+    "4b4381e2-9cee-439f-bed1-100bd25e02ff": {
+      "payload": "sample_data/json.json",
+      "vars-productResponse": "sample_data/java.dwl"
+    }
+  }
+}

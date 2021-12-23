@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="interface-suite.xml" />
+	<munit:test name="walmartapi-main-test" doc:id="6cd26a3d-fee8-4d99-a585-2368f8d9bc14" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock APIkit Router" doc:id="3cd5a81b-4f5a-4579-aac2-642f3bf9f646" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="0b48c10b-586e-400c-9f7a-2585fe17a202" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://walmartapimaintest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://walmartapimaintest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://walmartapimaintest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="item_id" value="#[output application/java --- readUrl('classpath://walmartapimaintest\mock_variable_1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://walmartapimaintest\mock_variable_2.dwl')]" />
+						<munit-tools:variable key="productResponse" value="#[output application/json --- readUrl('classpath://walmartapimaintest\mock_variable_3.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="a6171fc6-8cff-4c37-978b-20a0f27f8f85" >
+				<munit:payload value="#[readUrl('classpath://walmartapimaintest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://walmartapimaintest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to walmartapi-main" doc:id="35ebd214-374e-4fed-8b99-0f629848004d" name="walmartapi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="38e54b7f-9687-4729-85c6-9950e4e3ac45" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import walmartapimaintest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="walmartapi-main-test1" doc:id="5bf9ffbd-2a5f-4f49-a3dd-daf583edc54c" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock APIkit Router" doc:id="81fad6d3-de38-499d-8086-e8c1c4c545ed" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="0b48c10b-586e-400c-9f7a-2585fe17a202" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://walmartapimaintest1\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://walmartapimaintest1\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://walmartapimaintest1\mock_variable_.dwl')]" />
+						<munit-tools:variable key="nearbyResponse" value="#[output application/json --- readUrl('classpath://walmartapimaintest1\mock_variable_1.dwl')]" mediaType="application/json" encoding="UTF-8" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://walmartapimaintest1\mock_variable_2.dwl')]" />
+						<munit-tools:variable key="postalCode" value="#[output application/java --- readUrl('classpath://walmartapimaintest1\mock_variable_3.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="bbf51984-b261-49e5-a993-c246e1022bf2" >
+				<munit:payload value="#[readUrl('classpath://walmartapimaintest1\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://walmartapimaintest1\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to walmartapi-main" doc:id="7454c0fb-7658-4a43-a3a8-d80df73a2064" name="walmartapi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="e5baf0c8-cd4c-4df4-90ce-18ef2d89d9eb" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import walmartapimaintest1::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="walmartapi-main-test2" doc:id="182e5d66-d7a2-4894-8a46-6e069eab186f" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock APIkit Router" doc:id="916d8681-2c06-4c49-a0e9-8cdbe23b85bf" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="0b48c10b-586e-400c-9f7a-2585fe17a202" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://walmartapimaintest2\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://walmartapimaintest2\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://walmartapimaintest2\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="d21a1375-c212-49cd-949c-7ac9f0f1ab6a" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://walmartapimaintest2\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://walmartapimaintest2\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to walmartapi-main" doc:id="c82ef04e-c457-4a76-b7e4-09a3d02178a1" name="walmartapi-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="cadb9f94-ca6b-43fc-8dda-ffb6974fa843" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import walmartapimaintest2::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="get:\products\get-details:walmartapi-config-test" doc:id="484a64bb-dd75-4b31-ba8c-cd5d3e1a369e" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Refer getProductDetails" doc:id="ec407381-88eb-478d-8275-b397c57969f8" processor="flow-ref">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="b6371aff-e849-4859-921a-cf04f2c02732" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\mock_payload.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="item_id" value="#[output application/java --- readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\mock_variable_1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="productResponse" value="#[output application/json --- readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\mock_variable_2.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="4099572e-0d1d-4e95-8ca4-9d29fc8aa5e5" >
+				<munit:payload value="#[readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getproductsgetdetailswalmartapiconfigtest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\products\get-details:walmartapi-config" doc:id="73b0c27a-39cd-416a-bade-727931339413" name="get:\products\get-details:walmartapi-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="f6d15643-c0c4-472e-853b-6f90ea61e146" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getproductsgetdetailswalmartapiconfigtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

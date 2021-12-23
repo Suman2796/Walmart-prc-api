@@ -1,0 +1,12 @@
+rapidapi:
+  key : "35506fd035mshf4fb4f31cb9f4acp1f619fjsn11a026c94691"
+ 
+db:
+  user : "![MhYaqq6gLVP9DXFuD/C6jg==]"
+  password : "![MhYaqq6gLVMHYxLwamrURw==]"
+  host : "db4free.net"
+  port : "3306"
+  database : "testdbc45"
+  
+http:
+  host : "walmart.p.rapidapi.com"

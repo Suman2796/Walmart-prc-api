@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="implementation-suite.xml" />
+	<munit:test name="getProductDetails-test" doc:id="6a1b2659-893c-4286-8bf8-02850dfb07c5" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Call to RapidAPI" doc:id="e61613dd-6c9b-408b-b96b-556ffa6ad350" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="376a57aa-22ef-4b69-9c55-befa8202e4f3" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[readUrl('classpath://getProductDetailstest\mock_payload.dwl')]" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getProductDetailstest\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getProductDetailstest\mock_variable_.dwl')]" />
+						<munit-tools:variable key="item_id" value="#[output application/java --- readUrl('classpath://getProductDetailstest\mock_variable_1.dwl')]" mediaType="application/java" encoding="UTF-8" />
+						<munit-tools:variable key="productResponse" value="#[output application/json --- readUrl('classpath://getProductDetailstest\mock_variable_2.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="9758b3a8-1329-4d73-96e0-bd3cfe658e54" >
+				<munit:payload value="#[readUrl('classpath://getProductDetailstest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getProductDetailstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getProductDetailstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getProductDetails" doc:id="093c7916-f94e-4117-a1f5-e4d5d8a51cbe" name="getProductDetails"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="90f434b3-810f-4cc1-af84-bcbe2cbc8a58" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getProductDetailstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="2293dda3-7493-4ee9-a4f9-7fd7038b4236" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="4b4381e2-9cee-439f-bed1-100bd25e02ff" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Set ItemID" doc:id="5966337c-11dd-4171-b67e-6e54089e5930" processor="set-variable" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5ee3b86d-510b-4b28-81ea-3158d303b9bf" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="postProductDetails-test" doc:id="59ffd14d-d7e8-4c38-8fef-b32ca672ff5e" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Insert store details to DB" doc:id="1a86b7ee-0ad1-4cfb-b651-1819c36d0458" processor="db:insert">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="19e11765-3162-4925-8bdc-1e08c69ee307" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java --- readUrl('classpath://postProductDetailstest\mock_payload.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://postProductDetailstest\mock_variable_.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="bb9fa0fa-1780-409c-8e38-6af3381d6938" >
+				<munit:payload value="#[output application/json --- readUrl('classpath://postProductDetailstest\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json" />
+				<munit:attributes value="#[readUrl('classpath://postProductDetailstest\set-event_attributes.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://postProductDetailstest\set-event_variable_.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to postProductDetails" doc:id="182dade7-81ff-49d6-b400-e1b48ee16420" name="postProductDetails"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="444d9778-35c7-4f6c-948f-360314fa3385" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import postProductDetailstest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="0c3ea4e0-e858-46c7-bbdd-44a6383edda3" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="30b01a4e-7f2f-44b6-9d57-e509b5962bd0" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="getNearbyStore-test" doc:id="6e4669d1-b18a-4611-b6c7-535324dcebda" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Call To RapidAPI" doc:id="7f438df1-505c-46c0-83bc-e1cc87188a66" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="43489ffb-94ab-4b76-9db1-de4d6d47c51e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json --- readUrl('classpath://getNearbyStoretest\mock_payload1.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://getNearbyStoretest\mock_attributes1.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://getNearbyStoretest\mock_variable_3.dwl')]" />
+						<munit-tools:variable key="postalCode" value="#[output application/java --- readUrl('classpath://getNearbyStoretest\mock_variable_4.dwl')]" mediaType="application/java" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="ed825b79-66b6-4f13-beea-f3869ff4ecea" >
+				<munit:payload value="#[readUrl('classpath://getNearbyStoretest\set-event_payload1.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://getNearbyStoretest\set-event_attributes1.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://getNearbyStoretest\set-event_variable_1.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to getNearbyStore" doc:id="5f021702-4037-4baf-b9f9-1930569228b4" name="getNearbyStore"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="58932771-ad80-4825-95ff-b098be801d97" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import getNearbyStoretest::assert_expression_payload1
+---
+assert_expression_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="b1b084ec-b4ff-48b1-9022-9567e4ae53ec" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="abfa22cb-53ab-4ccd-b8e7-d23354f2d93f" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="2676f516-5818-4370-8182-524748789201" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="5b78a4ab-449c-44da-81d2-f4c405e17bea" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Logger" doc:id="656fd4b9-02d6-4005-ae2e-b702b77a5cef" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="9c69fcd0-6d56-4d3d-b5b1-073b8af08e97" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Set PostalCode" doc:id="8d37b8f8-8655-4f8e-a8ee-410743ba72ab" processor="set-variable" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="831cb1c1-12b3-4074-91fc-3448c2bb9ada" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Transform Message" doc:id="b63bff85-0191-48c9-bcf9-6b1512ca1ce3" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="03cc9136-417f-4568-b5d7-9703fc7211f6" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>
